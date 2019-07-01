@@ -32,7 +32,7 @@ In addition to the forementioned hyperparameters, some experiments were tested u
 
 The following table shows the parameter values used in the experiments
 
-|   Network   |  Optimizer  | Momentum | Batch Size |  Dropout  | Data Augmentation |  Pretrained  |
+|   Network   |  Weight Decay  | Momentum | Batch Size |  Dropout  | Data Augmentation |  Pretrained  |
 |-------------|-------------|----------|------------|-----------|-------------------|--------------|
 | 1e-3 / 5e-4 | 5e-3 / 5e-4 |      0.9 |         16 | 0.5 / 0.6 | True / False      | True / False |
 
