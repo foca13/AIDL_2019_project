@@ -40,4 +40,9 @@ The following table shows the parameter values used in the experiments
 
 
 
+|                            |  Optimizer  | Data Augmentation | Pretrained | Train / Val loss | train / val accuracy | test accuracy |
+|----------------------------|-------------|-------------------|------------|------------------|----------------------|---------------|
+| Siamese + decision network | 5e-3 / 5e-4 |               0.9 |         16 | 0.5 / 0.6        | True / False         | True / False  |
+
+
 ## Conclusions
