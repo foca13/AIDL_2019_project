@@ -1,9 +1,10 @@
 # Face detection and recognition
 ## Guillem Guigó i Corominas
 **Supervisor: Albert Mosella**
+
 Artificial intelligence with Deep Learning, Universitat Politècnica de Catalunya
 
-Spring 2019 Final Project
+Spring 2019
 
 ## Introduction
 
