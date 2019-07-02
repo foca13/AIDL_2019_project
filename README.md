@@ -6,6 +6,8 @@ In this project
 
 In the second part of the project, we splitted the group individually and each member of the group had to implement a siamese network with two VGG 
 
+<sub><sup>Small text</sup></sub>
+
 ## Development
 
 https://pjreddie.com/darknet/yolo/
