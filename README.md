@@ -40,8 +40,9 @@ The following table shows the parameter values used in the experiments
 
 #### Siamese + Decision network
 
-![experiment_1_loss]*Figure 1: Train and validation loss per epoch (no data aug)*
-![experiment_1_acc]*Figure 2: Train and validation accuracy per epoch (no data aug)*
+![experiment_1_loss]
+![experiment_1_acc]
+*Figure 1: Train and validation loss per epoch (no data aug)* *Figure 2: Train and validation accuracy per epoch (no data aug)*
 
 Figures 1 and 2 show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer, a learning rate of 5e-4 and weight decay of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss
 
