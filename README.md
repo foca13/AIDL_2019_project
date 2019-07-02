@@ -40,15 +40,32 @@ The following table shows the parameter values used in the experiments
 
 
 
-|                            | Optimizer | Data Augmentation | Pretrained | Dropout | train / val accuracy | test accuracy |
-|----------------------------|-----------|-------------------|------------|---------|----------------------|---------------|
-| Siamese + decision network | SGD       | False             | True       | Default | 0.956 / 0.717        |               |
-| Siamese + decision network | SGD       | True              | True       | Default | 1.0 / 0.711          |               |
-| Siamese + decision network | Adam      | True              | True       | Default | 0.508 / 0.528        |         0.509 |
-| Siamese + decision network | SGD       | False             | False      | Default | 0.841 / 0.621        |         0.659 |
-| Siamese + decision network | SGD       | True              | True       | 0.6     | 0.768 / 0.729        |         0.839 |
-| Cosine similarity          | SGD       | False             | True       | Default |                      |               |
-| Cosine similarity          | Adam      | False             | False      | Default |                      |               |
+
+|                            | Optimizer | Learning Rate | Weight Decay | Data Augmentation | Pretrained | Dropout | val accuracy | test accuracy |
+|----------------------------|-----------|---------------|--------------|-------------------|------------|---------|--------------|---------------|
+| Siamese + decision network | SGD       | 5e-4          | 5e-4         | False             | True       | Default |        0.717 |               |
+| Siamese + decision network | SGD       | 5e-4          | 5e-3         | True              | True       | Default |        0.711 |               |
+| Siamese + decision network | Adam      | 5e-4          | 5e-4         | True              | True       | Default |        0.528 |         0.509 |
+| Siamese + decision network | SGD       | 1e-3          | 5e-4         | False             | False      | Default |        0.621 |         0.659 |
+| Siamese + decision network | SGD       | 5e-4          | 5e-4         | True              | True       | 0.6     |        0.729 |         0.839 |
+| Cosine similarity          | SGD       | 5e-4          | 5e-4         | False             | True       | Default |              |               |
+| Cosine similarity          | Adam      | 1e-3          | 5e-4         | False             | False      | Default |              |               |
+
+
 
 
 ## Conclusions
+
+
+[experiment_1_loss]
+[experiment_1_val]
+[experiment_2_loss]
+[experiment_2_val]
+[experiment_3_loss]
+[experiment_3_val]
+[experiment_4_loss]
+[experiment_4_val]
+[experiment_5_loss]
+[experiment_5_val]
+[experiment_6_loss]
+[experiment_6_val]
