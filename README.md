@@ -16,7 +16,7 @@ https://pjreddie.com/darknet/yolo/
 
 ## Hyperparameters
 
-In order to test the training efficiency of the networks and compare between (...), several hyperparameters were tunned and its effect 
+In order to test the training efficiency of the networks and aim to find the best model, several hyperparameters were tunned and its effect on the model was studied.
 
 **Learning rate:** The learning rate determines the step size towards the minimum of the loss function during training, which ultimately dictates how fast the network learns. Here, a larger learning rate was selected when running experiments where the VGGs were not pretrained, and smaller learning rate was used in experiments where pretrained VGGs were used.
 
@@ -41,20 +41,34 @@ The following table shows the parameter values used in the experiments
 #### Siamese + Decision network
 
 ![alt][experiment_1_loss]
-*Figure 1: Train and validation loss (no data aug)*  
 ![alt][experiment_1_acc]
-*Figure 2: Train and validation accuracy(no data aug)*
 
 Figures 1 and 2 show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer, a learning rate of 5e-4 and weight decay of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss
 
-![alt][experiment_2_loss]*Figure 3: Train and validation loss per epoch (data aug)*
-![experiment_2_acc]*Figure 4: Train and validation accuracy per epoch (data aug)*
+![alt][experiment_2_loss]
+![alt][experiment_2_acc]
 
-Figures 3 and 4 show the training and validation curves for a siamese + decision network using a SGD optimizer, with learning rate of 5e-4, weight decay of 5e-3 and data augmentation. Although not as quickly as in the case with no data augmentation, the model still overfits
+Figures 3 and 4 show the training and validation curves for a siamese + decision network using a SGD optimizer, with learning rate of 5e-4, weight decay of 5e-3 and data augmentation. Although not as quickly as in the case with no data augmentation, the model still overfits.
 
-![experiment_3_loss]*Figure 5: Train and validation loss per epoch (Adam optimizer)*
-![experiment_3_acc]*Figure 6: Train and validation accuracy per epoch (Adam optimizer)*
+![alt][experiment_3_loss]
+![alt][experiment_3_acc]
 
+Figures 3 and 4 show the training and validation curves for a siamese + decision network using Adam optimizer, with learning rate of 5e-4, weight decay of 5e-4 and data augmentation. The seemingly random fluctuations in training and validation loss and accuracy suggest that the model didn't learn properly. This is supported by the low validation and test accuracy in this model.
+
+![alt][experiment_4_loss]
+![alt][experiment_4_acc]
+
+Figures 5 and 6 show the training and validation curves for a siamse + decision network trained from scratch, with SGD optimizer, learning rate of 1e-3, weight decay of 5e-4 and without data augmentation. The model still overfits, but it is able to generalize a little bit better.
+
+![alt][experiment_5_loss]
+![alt][experiment_5_acc]
+
+Figures 7 and 8 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and an increased droupout of 0.6. This model was able to generalize better than the previous one, although it trained slower. This results in higher validation and test accuracy values.
+
+#### Siamese cosine similarity
+
+![alt][experiment_6_loss]
+![alt][experiment_6_acc]
 
 |                            | Optimizer | Learning Rate | Weight Decay | Data Augmentation | Pretrained | Dropout | val accuracy | test accuracy |
 |----------------------------|-----------|---------------|--------------|-------------------|------------|---------|--------------|---------------|
@@ -77,10 +91,12 @@ Figures 3 and 4 show the training and validation curves for a siamese + decision
 [experiment_2_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_1.png "loss decision SGD with data augmentation"
 [experiment_2_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_1.png "accuracy decision SGD with data augmentation"
 [experiment_3_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_Adam_loss.png "loss decision Adam with data augmentation"
-[experiment_3_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_Adam_accuracy.png "accuracy decision Adam with data augmentation"
-[experiment_4_loss]
-[experiment_4_acc]
-[experiment_5_loss]
-[experiment_5_acc]
-[experiment_6_loss]
-[experiment_6_acc]
+[experiment_3_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_Adam_val.png "accuracy decision Adam with data augmentation"
+[experiment_4_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_pretrained_false_loss.png "loss decision not pretrained"
+[experiment_4_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_pretrained_false_val.png "accuracy decision not pretrained"
+[experiment_5_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_loss.png "loss decision with dropout"
+[experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
+[experiment_6_loss]:
+[experiment_6_acc]:
+[experiment_7_loss]:
+[experiment_7_acc]:
