@@ -38,12 +38,17 @@ The following table shows the parameter values used in the experiments
 
 ## Results
 
-#### Siamese + Decision network
+#### Siamese + Decision network (no data augmentation)
 
 ![experiment_1_loss]
 ![experiment_1_acc]
 
+The first two graphs show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer and a learning rate of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss
 
+#### Siamese + Decision network (with data augmentation)
+
+![experiment_2_loss]
+![experiment_2_acc]
 
 |                            | Optimizer | Learning Rate | Weight Decay | Data Augmentation | Pretrained | Dropout | val accuracy | test accuracy |
 |----------------------------|-----------|---------------|--------------|-------------------|------------|---------|--------------|---------------|
@@ -58,13 +63,13 @@ The following table shows the parameter values used in the experiments
 
 
 
-## Discussion
+## Discussion and conclusion
 
 
-[experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_1.png
-[experiment_1_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_1.png "Decision network + SGD no data augmentation"
-[experiment_2_loss]
-[experiment_2_val]
+[experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_2.png "loss decision SGD no data augmentation"
+[experiment_1_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_2.png "accuracy decision SGD no data augmentation"
+[experiment_2_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_1.png "loss decision SGD with data augmentation"
+[experiment_2_val]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_1.png "accuracy decision SGD with data augmentation"
 [experiment_3_loss]
 [experiment_3_val]
 [experiment_4_loss]
