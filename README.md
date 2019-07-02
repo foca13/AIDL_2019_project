@@ -38,6 +38,9 @@ The following table shows the parameter values used in the experiments
 
 ## Results
 
+#### Siamese + Decision network
+
+![experiment_1_loss] ![experiment_1_val]
 
 
 
@@ -54,11 +57,11 @@ The following table shows the parameter values used in the experiments
 
 
 
-## Conclusions
+## Discussion
 
 
-[experiment_1_loss]
-[experiment_1_val]
+[experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_1.png
+[experiment_1_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_1.png "Decision network + SGD no data augmentation"
 [experiment_2_loss]
 [experiment_2_val]
 [experiment_3_loss]
