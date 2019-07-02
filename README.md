@@ -40,7 +40,8 @@ The following table shows the parameter values used in the experiments
 
 #### Siamese + Decision network
 
-![experiment_1_loss] ![experiment_1_acc]
+![experiment_1_loss]
+![experiment_1_acc]
 
 
 
