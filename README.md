@@ -1,11 +1,16 @@
 # Face detection and recognition
 ## Guillem Guigó i Corominas
-Artificial intelligence with Deep Learning - Universitat Politècnica de Catalunya
+Artificial intelligence with Deep Learning
+
+Supervisor: Albert Mosella
+
+Universitat Politècnica de Catalunya
+
 Spring 2019 Final Project
 
 ## Introduction
 
-In this project 
+In this project we implemented a face detection and recognition 
 
 In the second part of the project, we splitted the group individually and each member of the group had to implement a siamese network with two VGG 
 
@@ -70,9 +75,6 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 
 #### Siamese cosine similarity
 
-![alt][experiment_6_loss]
-![alt][experiment_6_acc]
-
 |                            | Optimizer | Learning Rate | Weight Decay | Data Augmentation | Pretrained | Dropout | val accuracy | test accuracy |
 |----------------------------|-----------|---------------|--------------|-------------------|------------|---------|--------------|---------------|
 | Siamese + decision network | SGD       | 5e-4          | 5e-4         | False             | True       | Default |        0.717 |               |
@@ -99,7 +101,3 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 [experiment_4_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_pretrained_false_val.png "accuracy decision not pretrained"
 [experiment_5_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_loss.png "loss decision with dropout"
 [experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
-[experiment_6_loss]:
-[experiment_6_acc]:
-[experiment_7_loss]:
-[experiment_7_acc]:
