@@ -1,4 +1,7 @@
-# AIDL_2019_project
+# Face detection and recognition
+## Guillem Guigó i Corominas
+Artificial intelligence with Deep Learning - Universitat Politècnica de Catalunya
+Spring 2019 Final Project
 
 ## Introduction
 
