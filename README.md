@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The initial idea of this project was to develop a face detection network followed by a face recognition 
+In this project 
 
 In the second part of the project, we splitted the group individually and each member of the group had to implement a siamese network with two VGG 
 
@@ -32,7 +32,7 @@ In addition to the forementioned hyperparameters, some experiments were tested u
 
 The following table shows the parameter values used in the experiments
 
-|   Network   |  Weight Decay  | Momentum | Batch Size |  Dropout  | Data Augmentation |  Pretrained  |
+|Learning Rate|  Weight Decay  | Momentum | Batch Size |  Dropout  | Data Augmentation |  Pretrained  |
 |-------------|-------------|----------|------------|-----------|-------------------|--------------|
 | 1e-3 / 5e-4 | 5e-3 / 5e-4 |      0.9 |         16 | 0.5 / 0.6 | True / False      | True / False |
 
