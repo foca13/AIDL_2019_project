@@ -14,17 +14,18 @@ from torch import optim
 from torchvision import transforms
 import os
 import os.path as osp
+from tqdm import tqdm_notebook
 from PIL import Image
 import PIL
 
-"""ACCESS TO THE DRIVE FOLDER WHERE THE DATASET HAS BEEN STORED"""
+"""**ACCESS TO THE DRIVE FOLDER WHERE THE DATASET HAS BEEN STORED**"""
 
 from google.colab import drive
 
 drive.mount('/content/gdrive')
-root_path = 'gdrive/My Drive/Final project AIDL/'  #change dir to your project folder
+root_path = 'gdrive/My Drive/Final project AIDL/'
 
-"""DEFINE ARGUMENTS"""
+"""**DEFINE ARGUMENTS**"""
 
 class Args:
 
@@ -37,16 +38,15 @@ class Args:
     dataset_root = "gdrive/My Drive/Final project AIDL"
     dataset= "CFPDataset"
     lr = float(5e-4)
-    weight_decay = float(0.0005)
+    weight_decay = float(0.05)
     momentum = float(0.9)
     batch_size = int(16)
     workers = int(8)
     start_epoch = int(0)
     epochs = int(20)
-    save_every = int(2)
     resume = ""
 
-"""LOAD DATASET"""
+"""**CREATE DATASET CLASS**"""
 
 import numpy as np
 import torch
@@ -103,8 +103,8 @@ class CFPDataset(dataset.Dataset):
             idx = 0
             while idx < int(len(lines)/1):
                 img_pair = lines[idx].strip().split(',')
-                img1_dir = directories_frontal_images[int(img_pair[0])][1]
-                img2_dir = directories_frontal_images[int(img_pair[1])][1]
+                img1_dir = directories_frontal_images[int(img_pair[0])-1][1]
+                img2_dir = directories_frontal_images[int(img_pair[1])-1][1]
                 pair_tag = 0.0
                 d = {
                     "img1_path": img1_dir,
@@ -120,8 +120,8 @@ class CFPDataset(dataset.Dataset):
             idx = 0
             while idx < int(len(lines)/1):
                 img_pair = lines[idx].strip().split(',')
-                img1_dir = directories_frontal_images[int(img_pair[0])][1]
-                img2_dir = directories_frontal_images[int(img_pair[1])][1]
+                img1_dir = directories_frontal_images[int(img_pair[0])-1][1]
+                img2_dir = directories_frontal_images[int(img_pair[1])-1][1]
                 pair_tag = 1.0
                 d = {
                     "img1_path": img1_dir,
@@ -137,8 +137,8 @@ class CFPDataset(dataset.Dataset):
             idx = 0
             while idx < int(len(lines)/1):
                 img_pair = lines[idx].strip().split(',')
-                img1_dir = directories_frontal_images[int(img_pair[0])][1]
-                img2_dir = directories_profile_images[int(img_pair[1])][1]
+                img1_dir = directories_frontal_images[int(img_pair[0])-1][1]
+                img2_dir = directories_profile_images[int(img_pair[1])-1][1]
                 pair_tag = 0.0
                 d = {
                     "img1_path": img1_dir,
@@ -154,8 +154,8 @@ class CFPDataset(dataset.Dataset):
             idx = 0
             while idx < int(len(lines)/1):
                 img_pair = lines[idx].strip().split(',')
-                img1_dir = directories_frontal_images[int(img_pair[0])][1]
-                img2_dir = directories_profile_images[int(img_pair[1])][1]
+                img1_dir = directories_frontal_images[int(img_pair[0])-1][1]
+                img2_dir = directories_profile_images[int(img_pair[1])-1][1]
                 pair_tag = 1.0
                 d = {
                     "img1_path": img1_dir,
@@ -178,7 +178,7 @@ class CFPDataset(dataset.Dataset):
         image2 = Image.open(image2_path).convert('RGB')
         tag = d['pair_tag']
         if self.transforms is not None:
-            # this converts from (HxWxC) to (CxHxW) as wel
+            # this converts from (HxWxC) to (CxHxW) as well
             img1 = self.transforms(image1)
             img2 = self.transforms(image2)
 
@@ -195,13 +195,13 @@ def get_dataloader(datapath, args, img_transforms=None, split="train"):
                                              dataset_root=osp.expanduser(
                                                  args.dataset_root)),
                                   batch_size=args.batch_size,
-                                  shuffle=True,    
+                                  shuffle=True,
                                   num_workers=args.workers,
                                   pin_memory=True,
                                   drop_last=True)
     return data_loader
 
-"""MODEL"""
+"""**DEFINE THE MODEL**"""
 
 import torch
 from torch import nn
@@ -219,31 +219,25 @@ class RecognitionModel(nn.Module):
         self.fc1 = nn.Sequential(
             nn.Linear(in_features=512*7*7*2, out_features=4096),
             nn.ReLU(True),
-            nn.Dropout()
+            nn.Dropout(p=0.5)
         )
         self.fc2 = nn.Linear(in_features=4096, out_features=2)
 
     def forward(self, img1, img2):
         # the input to the vgg16 is a fixed-size 224x224 RGB image
         # we get the vgg16 features
-        #print(img1.size(), img2.size())
         feat_1 = self.feat(img1)
         feat_2 = self.feat(img2)
-        #print(feat_1.size(), feat_2.size())
         feat_1 = feat_1.view(feat_1.size(0), -1)
         feat_2 = feat_2.view(feat_2.size(0), -1)
-        #print(feat_1.size(), feat_2.size())
         # we concatenate the two tensors of features
         feat = torch.cat((feat_1, feat_2), 1)
-        #print(feat.size())
         # we run the classifier
         feat_3 = self.fc1(feat)
-        #print(feat_3.size)
         tag = self.fc2(feat_3)
-        #print(tag)
         return tag
 
-"""LOSS"""
+"""**LOSS**"""
 
 from torch import nn
 
@@ -257,7 +251,7 @@ class RecognitionCriterion(nn.Module):
         self.cls_loss = self.classification_criterion(*input)
         return self.cls_loss
 
-"""TRAINING AND VALIDATION"""
+"""**TRAINING AND VALIDATION**"""
 
 import torch
 from torchvision import transforms
@@ -269,11 +263,8 @@ def accuracy(predictions, y):
     total = 0
     preds = torch.topk(predictions, k=1)
     for p, i, label in zip(preds[0], preds[1], y):
-        #print(p, i, label)
         total += 1
-        if i == 1 and label == 1:
-            correct += 1
-        if i == 0 and label == 0:
+        if i == label:
             correct += 1
     return correct/total
 
@@ -292,14 +283,10 @@ def train(model, loss_fn, optimizer, dataloader, epoch, device):
         prob_var = prob_t.to(device)
         #prob_var = prob.to(device)
         #prob_var = prob_var.unsqueeze(dim=1)
-        #print(prob_var.size())
-        #print(prob_var)
         
         output = model(x1, x2)
         #output = output.reshape(1, -1)
         #output = output.squeeze()
-        #print(output.size())
-        #print(output)
         
         loss = loss_fn(output, prob_var)
         all_loss.append(loss.item())
@@ -333,19 +320,14 @@ def val(model, loss_fn, dataloader, epoch, device):
         prob_var = prob_t.to(device)
         # prob_var = prob.to(device)
         #prob_var = prob_var.unsqueeze(dim=1)
-        #print(prob_var.size())
-        #print(prob_var)
         output = model(x1, x2)
         #output = output.reshape(1, -1)
         #output = output.squeeze()
-        #print(output.size())
-        #print(output)
         loss = loss_fn(output, prob_var)
         acc = accuracy(output, prob_var)
         all_loss.append(loss.item())
         all_acc.append(acc)
                 
-        #print_state(idx, epoch, len(dataloader), loss_fn.cls_loss, split="val")
         if idx % 14 == 0:
             message1 = "VAL Epoch [{0}]: [{1}/{2}] ".format(epoch, idx,
                                                               len(dataloader))
@@ -353,13 +335,12 @@ def val(model, loss_fn, dataloader, epoch, device):
             print(message1, message2)
     return all_loss, all_acc
 
+# add data augmentation
 args = Args()
 data_aug = True
-train_transform=None
-if data_aug == False:
-  train_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+train_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
 
-else:
+if data_aug == True:
   train_transform = transforms.Compose([transforms.Resize((224, 224)), 
                                         transforms.RandomHorizontalFlip(), 
                                         transforms.RandomRotation(20, resample=PIL.Image.BILINEAR), 
@@ -367,22 +348,16 @@ else:
 
 img_transforms = train_transform
 
+"""**LOAD DATASET**"""
+
 train_loader = get_dataloader(args.split_traindata, args,
                               img_transforms=img_transforms)
 
 val_loader = get_dataloader(args.split_valdata, args,
                             img_transforms=img_transforms, split="val")
 
-model = RecognitionModel()
+model = RecognitionModel().cuda()
 loss_fn = RecognitionCriterion()
-
-# directory where we'll store model weights
-weights_dir = "weights"
-if not osp.exists(weights_dir):
-  
-    os.mkdir(weights_dir)
-
-torch.cuda.is_available()
 
 # check for CUDA
 if torch.cuda.is_available():
@@ -390,8 +365,10 @@ if torch.cuda.is_available():
 else:
     device = torch.device('cpu')
 
+# define optimizer
 optimizer = optim.SGD(model.parameters(), lr=args.lr,
                       momentum=args.momentum, weight_decay=args.weight_decay)
+# optimizer = optim.ADAM(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
 #if args.resume:
 #    checkpoint = torch.load(args.resume)
@@ -409,11 +386,9 @@ optimizer = optim.SGD(model.parameters(), lr=args.lr,
 #    save_path = Path(save_path, filename)
 #    torch.save(state, str(save_path))
 
-!ls
+"""**MAIN**"""
 
-print(args.epochs)
-
-check_point_name = 'best_epoch.pth.tar'
+check_point_name = 'gdrive/My Drive/Final project AIDL/results/best_epoch.pth.tar'
 # train and evalute for `epochs`
 loss_epoch_train = []
 loss_epoch_val = []
@@ -429,20 +404,16 @@ for epoch in range(args.start_epoch, args.epochs):
     loss_epoch_train.append(av_loss)
     acc_epoch_train.append(av_acc)
     
-    #if (epoch + 1) % args.save_every == 0:
-    #   save_checkpoint({
-    #        'epoch': epoch + 1,
-    #        'batch_size': train_loader.batch_size,
-    #        'model': model.state_dict(),
-    #        'optimizer': optimizer.state_dict()
-    #     }, filename="checkpoint_{0}.pth".format(epoch + 1),
-    #         save_path=weights_dir)
-    
     val_loss, val_acc = val(model, loss_fn, val_loader, epoch, device=device)
-    best=max(val_acc)
-    if best > best_acc:
-        best_acc = best
-        best_epoch=epoch
+    
+    av_loss = np.mean(val_loss)
+    av_acc = np.mean(val_acc)
+    loss_epoch_val.append(av_loss)
+    acc_epoch_val.append(av_acc)
+    
+    if av_acc > best_acc:
+        best_acc = av_acc
+        best_epoch = epoch
         
         checkpoint = {
             'epoch': epoch,
@@ -452,47 +423,118 @@ for epoch in range(args.start_epoch, args.epochs):
         }
         
         torch.save(checkpoint, check_point_name)
-        torch.save(loss_epoch_train, 'loss_epoch_train')
-        torch.save(loss_epoch_val,'loss_epoch_val')
-        torch.save(acc_epoch_train,'acc_epoch_train')
-        torch.save(acc_epoch_val,'acc_epoch_val')
+        # save epoch weights with highest validation accuracy
     
-    av_loss = np.mean(val_loss)
-    av_acc = np.mean(val_acc)
-    loss_epoch_val.append(av_loss)
-    acc_epoch_val.append(av_acc)
+    save_epochs = {
+        'loss_epoch_train': loss_epoch_train,
+        'loss_epoch_val': loss_epoch_val,
+        'acc_epoch_train': acc_epoch_train,
+        'acc_epoch_val': acc_epoch_val
+    }
     
-    
+    torch.save(save_epochs, 'gdrive/My Drive/Final project AIDL/results/loss_acc_per_epoch')
+        
 print("Best Epoch: ",best_epoch, "Best Acc: ", best_acc)
 
+"""**PLOT RESULTS**"""
+
+loss_acc_per_epoch=torch.load('gdrive/My Drive/Final project AIDL/results/loss_acc_per_epoch')
+#print(len(loss_acc_per_epoch['loss_epoch_val']))
+#print(max(loss_acc_per_epoch['acc_epoch_val']))
+
 import matplotlib.pyplot as plt
-epochs = range(1, len(loss_epoch_train) + 1)
+epochs = range(1, len(loss_acc_per_epoch['loss_epoch_train']) + 1)
 # b is for "solid blue line"
-plt.plot(epochs, loss_epoch_train, 'b', label='Training loss')
+plt.plot(epochs, loss_acc_per_epoch['loss_epoch_train'], 'b', label='Training loss')
 # r is for "solid red line"
-plt.plot(epochs, loss_epoch_val, 'r', label='Validation loss')
+plt.plot(epochs, loss_acc_per_epoch['loss_epoch_val'], 'r', label='Validation loss')
 plt.title('Training and validation loss')
 plt.xlabel('Epochs')
 plt.ylabel('Loss')
 plt.legend()
-#plt.savefig('train_val_loss.png')
-plt.clf()
+#plt.savefig('gdrive/My Drive/Final project AIDL/results/train_val_loss.png')
 plt.show()
 
-epochs = range(1, len(acc_epoch_train) + 1)
+epochs = range(1, len(loss_acc_per_epoch['acc_epoch_train']) + 1)
 # b is for "solid blue line"
-plt.plot(epochs, acc_epoch_train, 'b', label='Training accuracy')
+plt.plot(epochs, loss_acc_per_epoch['acc_epoch_train'], 'b', label='Training accuracy')
 # r is for "solid red line"
-plt.plot(epochs, acc_epoch_val, 'r', label='Validation accuracy')
+plt.plot(epochs, loss_acc_per_epoch['acc_epoch_val'], 'r', label='Validation accuracy')
 plt.title('Training and validation accuracy')
 plt.xlabel('Epochs')
 plt.ylabel('Accuracy')
 plt.legend()
-#plt.savefig('train_val_acc.png')
+#plt.savefig('gdrive/My Drive/Final project AIDL/results/train_val_acc.png')
 plt.show()
 
-cd /content/gdrive/My\ Drive
+"""**TEST**"""
 
-cp  -r /content/weights ./
+def accuracy(output, target, topk=(1,)):
+    """ accuracy using pytorch functionalities
+    """
+    maxk = max(topk)
+    batch_size = target.size(0)
 
-!chmod 777 gdrive Train_val_loss_acc.png
+    _, pred = output.topk(maxk, 1, True, True)
+    pred = pred.t() # transpose
+    correct = pred.eq(target.view(1, -1).expand_as(pred))
+    res = []
+    for k in topk:
+        correct_k = correct[:k].view(-1).float().sum(0)
+        res.append(correct_k.mul_(100.0 / batch_size))
+    return res
+
+class AverageMeter(object):
+    """Computes and stores the average and current value"""
+    def __init__(self):
+        self.reset()
+
+    def reset(self):
+        self.val = 0
+        self.avg = 0
+        self.sum = 0
+        self.count = 0
+
+    def update(self, val, count=1):
+        self.val = val
+        self.sum += val*count
+        self.count += count
+        self.avg = self.sum / self.count
+
+#test loop
+def test(model, loader):
+    model.eval()
+    loader = tqdm_notebook(loader, desc='MiniBatch: ')
+    acc = AverageMeter()
+
+    with torch.no_grad():
+      for i, (img1, img2, gt) in enumerate(loader, start = 0):
+
+            img1 =  img1.to('cuda:0')
+            img2 = img2.to('cuda:0')
+            gt = gt.long().to('cuda:0')
+            
+            batch_size = img1.size(0)
+
+            outputs = model(img1, img2)
+
+            acc.update(accuracy(outputs.data, gt)[0], batch_size)
+ 
+            torch.cuda.empty_cache()
+            
+    return acc.avg
+
+check_point_name='gdrive/My Drive/Final project AIDL/results/best_epoch.pth.tar'
+
+checkpoint = torch.load(check_point_name)
+
+model.load_state_dict(checkpoint['model'])
+
+transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor()])
+#datasetTest= CFPDataset(args.split_testdata, args, split="test", img_transforms=transform, dataset_root=osp.expanduser(args.dataset_root))                           
+datasetTest= CFPDataset(args.split_valdata, args, split="val", img_transforms=transform, dataset_root=osp.expanduser(args.dataset_root))                           
+testloader = torch.utils.data.DataLoader(datasetTest, batch_size=args.batch_size ,shuffle=False, num_workers=4)
+
+acc = test(model, testloader)
+
+print("Test Accuracy: ", acc.item())
