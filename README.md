@@ -44,8 +44,8 @@ The following table shows the parameter values used in the experiments
 |----------------------------|-----------|-------------------|------------|---------|----------------------|---------------|
 | Siamese + decision network | SGD       | False             | True       | Default | 0.956 / 0.717        |               |
 | Siamese + decision network | SGD       | True              | True       | Default | 1.0 / 0.711          |               |
-| Siamese + decision network | Adam      | True              | True       | Default | 0.508 / 52.75        |        50.857 |
-| Siamese + decision network | SGD       | False             | False      | Default | 0.841 / 62.107       |        65.893 |
+| Siamese + decision network | Adam      | True              | True       | Default | 0.508 / 0.528        |        0.509 |
+| Siamese + decision network | SGD       | False             | False      | Default | 0.841 / 0.621       |        0.659 |
 | Siamese + decision network | SGD       | True              | True       | 0.6     |                      |               |
 | Cosine similarity          | SGD       | False             | True       | Default |                      |               |
 | Cosine similarity          | Adam      | False             | False      | Default |                      |               |
