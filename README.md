@@ -8,21 +8,42 @@ Spring 2019
 
 ## Introduction
 
-In this project we implemented a face detection and recognition 
+In this project we implemented a face detection and recognition neural networks The project was divided in two parts: a face detection part, which consisted on 
 
+In the first part we tested and compared two facial detection algorithms using two different datasets, 
 In the second part of the project, we splitted the group individually and each member of the group had to implement a siamese network with two VGG 
 
 ## Development
 
-https://pjreddie.com/darknet/yolo/
+# Face detection
+
+In the first part of the project we 
+
+| Dataset | Num. of photos | Num. of faces |             Split              |
+|---------|----------------|---------------|--------------------------------|
+| FDDB    |           2840 |          4834 | 40% train / 10% val / 50% test |
+| Wider   |          32203 |        383203 | 40% train / 10% val / 50% test |
+
+The two algorithms 
+
+# Face recognition
 
 ## Architecture
 
+The two networks implemented here share a common core architecture consisting of a siamese with two VGGs that share weights. Most of the experiments were executed with VGGs pretrained with imagenet, although in some experiments the networks were trained from scratch.
 
+In the first network, the feature vectors outputted by the two VGGs are concatenated and then fed into a decision network consisting of a linear layer and a ReLU, which determines whether the two input images are from the same person or not. To train the network we use cross entropy loss. The accuracy is determined by the number of images guessed correctly out of the total number of images.
+
+The code that implements this network can be found here: https://github.com/foca13/AIDL_2019_project/blob/master/Final_Project_siamesa_v2_sbd.ipynb
+
+In the second network, 
+
+The code that implements this network can be found here: 
+https://github.com/foca13/AIDL_2019_project/blob/master/Final_project_siamese_cosine_sim_network.ipynb
 
 ## Hyperparameters
 
-In order to test the training efficiency of the networks and aim to find the best model, several hyperparameters were tunned and its effect on the model was studied.
+In order to test the training efficiency of the networks and aim to find the best model, several hyperparameters were tunned and their effects on the model were studied.
 
 **Learning rate:** The learning rate determines the step size towards the minimum of the loss function during training, which ultimately dictates how fast the network learns. Here, a larger learning rate was selected when running experiments where the VGGs were not pretrained, and smaller learning rate was used in experiments where pretrained VGGs were used.
 
@@ -42,14 +63,14 @@ The following table shows the parameter values used in the experiments
 |-------------|-------------|----------|------------|-----------|-------------------|--------------|
 | 1e-3 / 5e-4 | 5e-3 / 5e-4 |      0.9 |         16 | 0.5 / 0.6 | True / False      | True / False |
 
-## Results
+## Results and discussion
 
 #### Siamese + Decision network
 
 ![alt][experiment_1_loss]
 ![alt][experiment_1_acc]
 
-Figures 1 and 2 show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer, a learning rate of 5e-4 and weight decay of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss
+Figures 1 and 2 show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer, a learning rate of 5e-4 and weight decay of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss. To avoid overfitting, the next experiment was ran 
 
 ![alt][experiment_2_loss]
 ![alt][experiment_2_acc]
