@@ -6,16 +6,19 @@ Spring 2019
 
 ## Introduction
 
-In this project we implemented a face detection and recognition neural networks The project was divided in two parts: a face detection part, in which given any picture with people (...) the network is able to detect the faces 
-
+In this project we implemented a face detection and recognition neural networks.  
+The goal of this project was to implement a system that, given 
+The project was divided in two parts: a face detection part, in which given any picture with people (...) the network is able to detect the faces
 In the first part we tested and compared two facial detection algorithms using two different datasets, 
-In the second part of the project, we splitted the group individually and each member of the group had to implement a siamese network with two VGG 
+In the second part of the project, we implemented a siamese network with two VGGs 
 
 ## Development
 
 ### Face detection
 
-In the first part of the project we 
+#### Datasets
+
+We used two different datasets:
 
 | Dataset | Num. of photos | Num. of faces |             Split              |
 |---------|----------------|---------------|--------------------------------|
@@ -99,14 +102,16 @@ Figures 9 and 10 show training and validation curves for a siamese + decision ne
 ![alt][experiment_6_loss]
 ![alt][experiment_6_acc]
 
-Figures 11 and 12 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and a droupout of 0.5. This model was able to achieve the highest validation accuracy, with 79.8 after 28 epochs using a pretrained network. This was surprising (...) The fact that the best epoch (the one with the highest validation accuracy) was epoch 28 out of the 30 epochs that the experiment ran for suggests that the network was still training, and that a higher accuracy could have potentially been reached.
+Figures 11 and 12 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and a droupout of 0.5. This model was able to achieve the highest validation accuracy, with 79.8 after 28 epochs using a pretrained network. This was surprising as all the previous models had the dropout function from pytorch implemented, but the default parameters were not changed. Looking at the pytorch documentation of the dropout function, the default dropout probability is set to 0.5; as the results here show, we don't obtain the same outcome if we run the plain dropout function than if we pass a parameter with dropout probability p=0.5. 
+
+The fact that the best epoch (the one with the highest validation accuracy) was epoch 28 out of the 30 epochs that the experiment ran for suggests that the network was still training, and that a higher accuracy could have potentially been reached.
 
 ### Siamese cosine similarity
 
 ![alt][experiment_7_loss]
 ![alt][experiment_8_loss]
 
-Figures 13 and 14
+Figures 13 and 14 show the loss curves for two different experiments executed with the cosine similarity network. Both experiments used pretrained networks, ran for 16 epochs, had a learning rate of 1e-3, weight decay of 5e-4, data augmentation and no dropout. The experiment in figure 13 (left) used SGD as optimizer, while the experiment in figure 14 (right) used Adam as optimizer. Although both networks show training signs, the behavior of the loss curve when using Adam optimizer is not smooth and has a sudden drop in loss value, after not showing training signs for about 10 epochs. This suggests that, as in the case with the decision network, the Adam optimizer was not implemented correctly. The experiment with SGD shows a smooth decrease in the loss function and a steady increase in accuracy, showing signs of proper training. In this experiment the epoch with the best performance was epoch 16; since this was the last epoch, it is most likely that the network was still learing. Unfortunately, longer experiments could not be ran, so the maximum accuracy reached by this model could not be properly determined.
 
 The table below shows the results of all the experiments, with the hyperparameters chosen for each experiment. The best model was the pretrained siamese + decision network which included a dropout of 0.5, using SGD as optimizer.
 **The test accuracy for this model was 81.2%.**
@@ -114,7 +119,8 @@ The table below shows the results of all the experiments, with the hyperparamete
 ![alt][experiment_table]
 
 ## Conclusion
-
+All the networks that used SGD were able to train. 
+Since these experiments are computationally more expensive and they require longer time to train.
 
 [experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_2.png "loss decision SGD no data augmentation"
 [experiment_1_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_2.png "accuracy decision SGD no data augmentation"
