@@ -8,7 +8,7 @@ Spring 2019
 
 ## Introduction
 
-In this project we implemented a face detection and recognition neural networks The project was divided in two parts: a face detection part, which consisted on 
+In this project we implemented a face detection and recognition neural networks The project was divided in two parts: a face detection part, in which given any picture with people (...) the network is able to detect the faces 
 
 In the first part we tested and compared two facial detection algorithms using two different datasets, 
 In the second part of the project, we splitted the group individually and each member of the group had to implement a siamese network with two VGG 
@@ -40,7 +40,7 @@ In the first network, the feature vectors outputted by the two VGGs are concaten
 
 The code that implements this network can be found here: https://github.com/foca13/AIDL_2019_project/blob/master/Final_Project_siamesa_v2_sbd.ipynb
 
-In the second network, the feature vectors To determine the validation and test accuracy, we select the smallest distance between the
+In the second network, the cosine similarity between the feature vectors outputted by the two VGGs is calculated. The network is trained by decreasing the angle between feature vectors of images that correspond to the same identity (thus increasing similarity) and increasing the angle between vectors of images that correspond to different identities (thus decreasing similarity). To determine the validation and test accuracy, we select the lowest similarity between images of the same identity (lower bound) and the highest similarity between images of different identities (upper bound). Starting from the lower bound, we select a threshod and we gradually increase the value until we reach the upper bound (steps of 0.001). From this range of values we then select the threshold that yields the highest accuracy.
 
 ![alt][siamese_cosine]
 
@@ -76,22 +76,22 @@ The following table shows the parameter values used in the experiments
 ![alt][experiment_1_loss]
 ![alt][experiment_1_acc]
 
-Figures 1 and 2 show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer, a learning rate of 5e-4 and weight decay of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss. To avoid overfitting, the next experiment was ran 
+Figures 1 and 2 show the training and validation curves for loss (left) and accuracy (right) for a siamese + decision network, using SGD as optimizer, a learning rate of 5e-4 and weight decay of 5e-4, with no data augmentation (full hyperparameter description in table below). The model overfits quickly to the training data (blue line), shown by a really high training accuracy (close to 1) and an increase in validation loss. Despite the relatively high validation and test accuracies, the model is not training properly. The next experiment was ran with data augmentation to try to improve generalization.
 
 ![alt][experiment_2_loss]
 ![alt][experiment_2_acc]
 
-Figures 3 and 4 show the training and validation curves for a siamese + decision network using a SGD optimizer, with learning rate of 5e-4, weight decay of 5e-3 and data augmentation. Although not as quickly as in the case with no data augmentation, the model still overfits.
+Figures 3 and 4 show the training and validation curves for a siamese + decision network using a SGD optimizer, with learning rate of 5e-4, weight decay of 5e-3 and data augmentation. Although not as quickly as in the case with no data augmentation, the model still overfits. This could be explained by the relatively small size of the dataset used and the similarity between many of the identities in the training and validation splits.
 
 ![alt][experiment_3_loss]
 ![alt][experiment_3_acc]
 
-Figures 3 and 4 show the training and validation curves for a siamese + decision network using Adam optimizer, with learning rate of 5e-4, weight decay of 5e-4 and data augmentation. The seemingly random fluctuations in training and validation loss and accuracy suggest that the model didn't learn properly. This is supported by the low validation and test accuracy in this model.
+Figures 3 and 4 show the training and validation curves for a siamese + decision network using Adam optimizer, with learning rate of 5e-4, weight decay of 5e-4 and data augmentation. The seemingly random fluctuations in training and validation loss and accuracy suggest that the model didn't learn properly. This is supported by the low validation and test accuracy in this model. Since Adam is a well known and used optimizing algorithm, these problems were problably due to a bad implementation of the optimizer in our model.
 
 ![alt][experiment_4_loss]
 ![alt][experiment_4_acc]
 
-Figures 5 and 6 show the training and validation curves for a siamse + decision network trained from scratch, with SGD optimizer, learning rate of 1e-3, weight decay of 5e-4 and without data augmentation. The model still overfits, but it is able to generalize a little bit better.
+Figures 5 and 6 show the training and validation curves for a siamse + decision network trained from scratch, with SGD optimizer, learning rate of 1e-3, weight decay of 5e-4 and without data augmentation. Since the model is not pretrained, The model still overfits, but it is able to generalize a little bit better.
 
 ![alt][experiment_5_loss]
 ![alt][experiment_5_acc]
@@ -126,6 +126,8 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 [experiment_4_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_pretrained_false_val.png "accuracy decision not pretrained"
 [experiment_5_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_loss.png "loss decision with dropout"
 [experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
+[experiment_6_loss]: 
+[experiment_6_acc]:
 [siamese_network]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_diagram.jpeg "siamese network"
 [siamese_decision]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese + decision network"
 [siamese_cosine]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_cosine_diagram.png "siamese cosine similarity"
