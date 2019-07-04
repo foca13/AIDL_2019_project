@@ -6,11 +6,8 @@ Spring 2019
 
 ## Introduction
 
-In this project we implemented a face detection and recognition neural networks.  
-The goal of this project was to implement a system that, given 
-The project was divided in two parts: a face detection part, in which given any picture with people (...) the network is able to detect the faces
-In the first part we tested and compared two facial detection algorithms using two different datasets, 
-In the second part of the project, we implemented a siamese network with two VGGs 
+In this project we implemented face detection and recognition neural networks. The goal of this project was to implement a system that, given an input image, it would be able to detect the faces of the people in it and then recognize their identities. The project was divided in two parts: a face detection part where we tested two different algorithms in two different datasets and compared their accuracy, and an image recognition part. 
+In the first part of the project we selected already pipelined algorithms from open source projects and tested them; in the second part, we implemented a siamese network with two VGGs (architectures discussed in-depth in the Development section). Given two input facial images, we expect the network to be able to tell (with a certain degree of accuracy) whether the two images are of the same person or not.
 
 ## Development
 
@@ -18,7 +15,7 @@ In the second part of the project, we implemented a siamese network with two VGG
 
 #### Datasets
 
-We used two different datasets: FDDB, a small dataset which consists of 2840 photos with 4834 faces, and Wider faces, which consists of 32203 with 383203 faces. The datasets contain images of differnt quotidian and ocasional events, such as celebrations, riots, or people handshaking, among others.
+We used two different datasets: FDDB, a small dataset which consists of 2840 photos with 4834 faces, and Wider faces, which consists of 32203 with 383203 faces. The datasets contain images of differnt quotidian and ocasional events, such as celebrations, riots, or people handshaking, among others. The splits selected were 40% for train, 10% for validation and 50% for test.
 
 | Dataset | Num. of photos | Num. of faces | Train | Validation | Test |
 |---------|----------------|---------------|-------|------------|------|
@@ -28,9 +25,17 @@ We used two different datasets: FDDB, a small dataset which consists of 2840 pho
 
 #### Algorithms
 
-Two different face detection algorithms were used: YOLOv3 and TinyFaces, both trained with the Wider dataset. The 
+Two different face detection algorithms were used: YOLOv3 and TinyFaces, both trained with the Wider dataset. YOLOv3 achieves 85% accuracy with the Wider dataset and 97% accuracy with the FDDB dataset. TinyFaces achieves 87% accuracy with the Wider dataset and 93% accuracy with the FDDB dataset.
 
 ### Face recognition
+
+#### Dataset
+
+We used the Celebrities in Frontal-Profile in the Wild (CFPW) dataset, which consists of images of 500 different celebrities, each having 10 frontal and 4 profile images. The splits selected were 60% for training, 20% for validation and 20% for test
+
+| Dataset | Num. of identities |   Num. of faces / images   | Train | Validation | Test |
+|---------|--------------------|----------------------------|-------|------------|------|
+| CFPW    |                500 | 5000 frontal, 2000 profile | 60%   | 20%        | 20%  |
 
 #### Architecture
 
@@ -121,7 +126,6 @@ The table below shows the results of all the experiments, with the hyperparamete
 
 ## Conclusion
 All the networks that used SGD were able to train. 
-Since these experiments are computationally more expensive and they require longer time to train.
 
 [experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_2.png "loss decision SGD no data augmentation"
 [experiment_1_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_2.png "accuracy decision SGD no data augmentation"
