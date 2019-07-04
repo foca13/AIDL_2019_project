@@ -1,6 +1,4 @@
 # Face detection and recognition
-## Guillem Guigó i Corominas
-**Supervisor: Albert Mosella**
 
 Artificial intelligence with Deep Learning, Universitat Politècnica de Catalunya
 
@@ -96,7 +94,7 @@ Figures 5 and 6 show the training and validation curves for a siamse + decision 
 ![alt][experiment_5_loss]
 ![alt][experiment_5_acc]
 
-Figures 7 and 8 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and an increased droupout of 0.6. This model was able to generalize better than the previous one, as the validation accuracy increased . This results in higher validation and test accuracy values.
+Figures 7 and 8 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and an increased droupout of 0.6. This model was able to generalize better than the previous ones, as the overall accuracy in test and validation increased and the validation loss decreased. Another thing to notice is that the training accuracy didn't increase to 1
 
 ### Siamese cosine similarity
 
