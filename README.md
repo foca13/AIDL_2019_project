@@ -40,7 +40,7 @@ In the first network, the feature vectors outputted by the two VGGs are concaten
 
 The code that implements this network can be found here: https://github.com/foca13/AIDL_2019_project/blob/master/Final_Project_siamesa_v2_sbd.ipynb
 
-In the second network, the feature vectors To determine the validation and test accuracy, we select the smallest distance between 
+In the second network, the feature vectors To determine the validation and test accuracy, we select the smallest distance between the
 
 ![alt][siamese_cosine]
 
