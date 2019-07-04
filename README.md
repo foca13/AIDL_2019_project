@@ -6,8 +6,7 @@ Spring 2019
 
 ## Introduction
 
-In this project we implemented face detection and recognition neural networks. The goal of this project was to implement a system that, given an input image, it would be able to detect the faces of the people in it and then recognize their identities. The project was divided in two parts: a face detection part where we tested two different algorithms in two different datasets and compared their accuracy, and an image recognition part. 
-In the first part of the project we selected already pipelined algorithms from open source projects and tested them; in the second part, we implemented a siamese network with two VGGs (architectures discussed in-depth in the Development section). Given two input facial images, we expect the network to be able to tell (with a certain degree of accuracy) whether the two images are of the same person or not.
+In this project we implemented face detection and recognition neural networks. The goal of this project was to implement a system that, given an input image, it would be able to detect the faces of the people in it and then recognize their identities. The project was divided in two parts: a face detection part where we tested two different algorithms in two different datasets and compared their accuracy, and an image recognition part. In the first part of the project, we selected already pipelined algorithms from open source projects and tested them; in the second part, we implemented a siamese network with two VGGs (architectures discussed in-depth in the Development section). Given two input facial images, we expect the network to be able to tell (with a certain degree of accuracy) whether the two images are of the same person or not.
 
 ## Development
 
