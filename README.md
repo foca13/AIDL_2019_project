@@ -15,7 +15,7 @@ In the second part of the project, we splitted the group individually and each m
 
 ## Development
 
-# Face detection
+### Face detection
 
 In the first part of the project we 
 
@@ -26,7 +26,7 @@ In the first part of the project we
 
 The two algorithms 
 
-# Face recognition
+### Face recognition
 
 ![alt][siamese_network]
 
