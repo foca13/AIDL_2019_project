@@ -128,4 +128,4 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 [experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
 [siamese_network]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_diagram.jpeg "siamese network"
 [siamese_decision]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese + decision network"
-[siamese_cosine]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese cosine similarity"
+[siamese_cosine]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_cosine_diagram.png "siamese cosine similarity"
