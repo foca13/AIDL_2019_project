@@ -28,11 +28,15 @@ The two algorithms
 
 # Face recognition
 
+![alt][siamese_network]
+
 ## Architecture
 
 The two networks implemented here share a common core architecture consisting of a siamese with two VGGs that share weights. Most of the experiments were executed with VGGs pretrained with imagenet, although in some experiments the networks were trained from scratch.
 
 In the first network, the feature vectors outputted by the two VGGs are concatenated and then fed into a decision network consisting of a linear layer and a ReLU, which determines whether the two input images are from the same person or not. To train the network we use cross entropy loss. The accuracy is determined by the number of images guessed correctly out of the total number of images.
+
+
 
 The code that implements this network can be found here: https://github.com/foca13/AIDL_2019_project/blob/master/Final_Project_siamesa_v2_sbd.ipynb
 
@@ -120,3 +124,5 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 [experiment_4_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_pretrained_false_val.png "accuracy decision not pretrained"
 [experiment_5_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_loss.png "loss decision with dropout"
 [experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
+[siamese_network]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_diagram.png "siamese network"
+[siamese_decision]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese + decision network"
