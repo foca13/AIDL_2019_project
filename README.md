@@ -40,7 +40,9 @@ In the first network, the feature vectors outputted by the two VGGs are concaten
 
 The code that implements this network can be found here: https://github.com/foca13/AIDL_2019_project/blob/master/Final_Project_siamesa_v2_sbd.ipynb
 
-In the second network, 
+In the second network, the feature vectors To determine the validation and test accuracy, we select the smallest distance between 
+
+![alt][siamese_cosine]
 
 The code that implements this network can be found here: 
 https://github.com/foca13/AIDL_2019_project/blob/master/Final_project_siamese_cosine_sim_network.ipynb
@@ -55,7 +57,7 @@ In order to test the training efficiency of the networks and aim to find the bes
 
 **Momentum:** Momentum is used in SGD algorithms and it is an improvement to classical SGD, as it helps the network converge faster by accelerating the gradients toward the minimum and diminishing noisy effects. Here this parameter was used when SGD was selected as optimizer, but not when using Adam.
 
-**Data augmentation:** This parameter helps to improve generalization, as it adds noise and other small perturbations to the images in the training set. Here, data augmentation was implemented by adding random horizontal flips and random rotations to the images.
+**Data augmentation:** This parameter helps to improve generalization, as it adds noise and other small perturbations to the images in the training set. Here, data augmentation was implemented by adding random horizontal flips and random rotations of up to +/- 20 degrees to the images.
 
 **Batch size:** This is the number of images that are loaded in the GPU and fed into the network in each iteration. Since there were no problems with running out of GPU memory, the batch size was left fixed for all experiments.
 
@@ -111,7 +113,7 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 
 
 
-## Discussion and conclusion
+## Conclusion
 
 
 [experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_2.png "loss decision SGD no data augmentation"
@@ -126,3 +128,4 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 [experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
 [siamese_network]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_diagram.jpeg "siamese network"
 [siamese_decision]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese + decision network"
+[siamese_cosine]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese cosine similarity"
