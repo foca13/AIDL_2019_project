@@ -32,7 +32,7 @@ Two different face detection algorithms were used: YOLOv3 and TinyFaces, both tr
 
 ### Face recognition
 
-## Architecture
+#### Architecture
 
 The two networks implemented here share a common core architecture consisting of a siamese with two VGGs that share weights. Most of the experiments were executed with VGGs pretrained with imagenet, although in some experiments the networks were trained from scratch.
 
@@ -49,7 +49,7 @@ In the second network, the cosine similarity between the feature vectors outputt
 The code that implements this network can be found here: 
 https://github.com/foca13/AIDL_2019_project/blob/master/Final_project_siamese_cosine_sim_network.ipynb
 
-## Hyperparameters
+#### Hyperparameters
 
 In order to test the training efficiency of the networks and aim to find the best model, several hyperparameters were tunned and their effects on the model were studied.
 
@@ -73,7 +73,7 @@ The following table shows the parameter values used in the experiments
 
 ## Results and discussion
 
-### Siamese + Decision network
+#### Siamese + Decision network
 
 ![alt][experiment_1_loss]
 ![alt][experiment_1_acc]
@@ -107,7 +107,7 @@ Figures 11 and 12 show training and validation curves for a siamese + decision n
 
 The fact that the best epoch (the one with the highest validation accuracy) was epoch 28 out of the 30 epochs that the experiment ran for suggests that the network was still training, and that a higher accuracy could have potentially been reached.
 
-### Siamese cosine similarity
+#### Siamese cosine similarity
 
 ![alt][experiment_7_loss]
 ![alt][experiment_8_loss]
