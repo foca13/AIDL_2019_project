@@ -84,22 +84,32 @@ Figures 3 and 4 show the training and validation curves for a siamese + decision
 ![alt][experiment_3_loss]
 ![alt][experiment_3_acc]
 
-Figures 3 and 4 show the training and validation curves for a siamese + decision network using Adam optimizer, with learning rate of 5e-4, weight decay of 5e-4 and data augmentation. The seemingly random fluctuations in training and validation loss and accuracy suggest that the model didn't learn properly. This is supported by the low validation and test accuracy in this model. Since Adam is a well known and used optimizing algorithm, these problems were problably due to a bad implementation of the optimizer in our model.
+Figures 5 and 6 show the training and validation curves for a siamese + decision network using Adam optimizer, with learning rate of 5e-4, weight decay of 5e-4 and data augmentation. The seemingly random fluctuations in training and validation loss and accuracy suggest that the model didn't learn properly. This is supported by the low validation and test accuracy in this model. Since Adam is a well known and used optimizing algorithm, these problems were problably due to a bad implementation of the optimizer in our model.
 
 ![alt][experiment_4_loss]
 ![alt][experiment_4_acc]
 
-Figures 5 and 6 show the training and validation curves for a siamse + decision network trained from scratch, with SGD optimizer, learning rate of 1e-3, weight decay of 5e-4 and without data augmentation. Since the model is not pretrained, it takes longer to learn, as shown by the much slower and progressive decrease of the loss function and increase of the accuracy function with respect to the previous models. Nonetheless, the model still shows overfitting behavior, and the increasing training accuracy suggest that the model would reach a training accuracy of 1 if it ran for more epochs.
+Figures 7 and 8 show the training and validation curves for a siamse + decision network trained from scratch, with SGD optimizer, learning rate of 1e-3, weight decay of 5e-4 and without data augmentation. Since the model is not pretrained, it takes longer to learn, as shown by the much slower and progressive decrease of the loss function and increase of the accuracy function with respect to the previous models. Nonetheless, the model still shows overfitting behavior, and the increasing training accuracy suggest that the model would reach a training accuracy of 1 if it ran for more epochs.
 
 ![alt][experiment_5_loss]
 ![alt][experiment_5_acc]
 
-Figures 7 and 8 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and an increased droupout of 0.6. This model was able to generalize better than the previous ones, as the overall accuracy in test and validation increased and the validation loss decreased. Another thing to notice is that the training accuracy didn't increase to 1
+Figures 9 and 10 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and an increased droupout of 0.6. This model was able to generalize better than the previous ones, as the overall accuracy in test and validation increased and the validation loss decreased. Another thing to notice is that the training accuracy didn't increase to 1, which means that the model didn't generalize. Nonetheless, a dropout of 0.6 is still relatively high and the network might be able to train faster with improved accuracy if we choose a lower value for dropout.
+
+![alt][experiment_6_loss]
+![alt][experiment_6_acc]
+
+Figures 11 and 12 show training and validation curves for a siamese + decision network with SGD optimizer, learning rate of 5e-4, weight decay of 5e-4 and a droupout of 0.5. This model was able to achieve the highest validation accuracy, with 79.8 after 28 epochs using a pretrained network. This was surprising (...) The fact that the best epoch (the one with the highest validation accuracy) was epoch 28 out of the 30 epochs that the experiment ran for suggests that the network was still training, and that a higher accuracy could have potentially been reached.
 
 ### Siamese cosine similarity
 
 ![alt][experiment_7_loss]
 ![alt][experiment_8_loss]
+
+Figures 13 and 14
+
+The table below shows the results of all the experiments, with the hyperparameters chosen for each experiment. The best model was the pretrained siamese + decision network which included a dropout of 0.5, using SGD as optimizer.
+**The test accuracy for this model was 81.2%.**
 
 ![alt][experiment_table]
 
@@ -116,11 +126,11 @@ Figures 7 and 8 show training and validation curves for a siamese + decision net
 [experiment_4_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_pretrained_false_val.png "accuracy decision not pretrained"
 [experiment_5_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_loss.png "loss decision with dropout"
 [experiment_5_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_dropout_accuracy.png "accuracy decision without dropout"
-[experiment_6_loss]: 
-[experiment_6_acc]:
+[experiment_6_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/loss_decision_dropout_2.png "loss decision dropout=0.5"
+[experiment_6_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/acc_decision_dropout_2.png "accuracy decision dropout=0.5"
 [experiment_7_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/loss_SGD_cosine.png "loss cosine similarity SGD"
 [experiment_8_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/loss_adam_cosine.png "loss cosine similarity Adam"
 [experiment_table]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/Table1.png
-[siamese_network]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_diagram.jpeg "siamese network"
+[siamese_network]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_diagram.png "siamese network"
 [siamese_decision]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_decision_diagram.png "siamese + decision network"
 [siamese_cosine]: https://github.com/foca13/AIDL_2019_project/blob/master/resources/siamese_cosine_diagram.png "siamese cosine similarity"
