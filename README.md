@@ -20,10 +20,10 @@ In the second part of the project, we implemented a siamese network with two VGG
 
 We used two different datasets: FDDB, a small dataset which consists of 2840 photos with 4834 faces, and Wider faces, which consists of 32203 with 383203 faces. The datasets contain images of differnt quotidian and ocasional events, such as celebrations, riots, or people handshaking, among others.
 
-| Dataset | Num. of photos | Num. of faces |             Split              |
-|---------|----------------|---------------|--------------------------------|
-| FDDB    |           2840 |          4834 | 40% train / 10% val / 50% test |
-| Wider   |          32203 |        383203 | 40% train / 10% val / 50% test |
+| Dataset | Num. of photos | Num. of faces | Train | Validation | Test |
+|---------|----------------|---------------|-------|------------|------|
+| FDDB    |           2840 |          4834 | 40%   | 10%        | 50%  |
+| Wider   |          32203 |        383203 | 40%   | 10%        | 50%  |
 
 
 #### Algorithms
