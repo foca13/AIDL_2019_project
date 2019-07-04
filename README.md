@@ -28,7 +28,7 @@ We used two different datasets: FDDB, a small dataset which consists of 2840 pho
 
 #### Algorithms
 
-Two different face detection algorithms were used: YOLOv3 and TinyFaces. 
+Two different face detection algorithms were used: YOLOv3 and TinyFaces, both trained with the Wider dataset. The 
 
 ### Face recognition
 
