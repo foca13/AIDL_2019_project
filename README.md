@@ -36,7 +36,7 @@ The two networks implemented here share a common core architecture consisting of
 
 In the first network, the feature vectors outputted by the two VGGs are concatenated and then fed into a decision network consisting of a linear layer and a ReLU, which determines whether the two input images are from the same person or not. To train the network we use cross entropy loss. The accuracy is determined by the number of images guessed correctly out of the total number of images.
 
-
+![alt][siamese_decision]
 
 The code that implements this network can be found here: https://github.com/foca13/AIDL_2019_project/blob/master/Final_Project_siamesa_v2_sbd.ipynb
 
