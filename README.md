@@ -123,8 +123,8 @@ The table below shows the results of all the experiments, with the hyperparamete
 
 ![alt][experiment_table]
 
-## Conclusion
-All the networks that used SGD were able to train. 
+## Conclusions
+All the networks that used SGD were able to train. Increasing the weight decay and adding data augmentation was not sufficient to avoid overfitting and generalize well, although adding a dropout of 0.5 and 0.6 solved this problem for the siamese + deicision networks. Running longer experiments with different dropout values could help improve the overall accuracy (validation and test) for this type of network. Models that used Adam as optimizer did not train properly, most likely due to bad code implementation. Regarding the cosine similarity network, running longer experiments with serveral parameter tunnings could help determine the effectiveness of such network properly, and would allow for a fair comparison with the siamese + decision network.
 
 [experiment_1_loss]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_loss_2.png "loss decision SGD no data augmentation"
 [experiment_1_acc]: https://github.com/foca13/AIDL_2019_project/blob/master/results/Decision_network_SGD_accuracy_2.png "accuracy decision SGD no data augmentation"
